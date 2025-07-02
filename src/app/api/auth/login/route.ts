@@ -18,7 +18,7 @@ export async function POST(request: Request) {
         path: '/',
         secure: process.env.NEXT_APP === 'production',
         sameSite: 'lax',
-        maxAge: 60 * 60
+        maxAge: 60 * 60 * 24
     });
 
     return response;

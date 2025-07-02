@@ -5,8 +5,7 @@ import {
     flexRender,
     getCoreRowModel,
     getFilteredRowModel,
-    getPaginationRowModel,
-    Row,
+    getPaginationRowModel, RowData,
     RowSelectionState,
     useReactTable
 } from "@tanstack/react-table"
@@ -30,7 +29,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import {Checkbox} from "@/components/ui/checkbox";
 import {Input} from "@/components/ui/input";
-import {Pen, Search, Trash} from "lucide-react";
+import {Pen, Plus, Search, Trash} from "lucide-react";
 import {
     AlertDialog,
     AlertDialogAction,
@@ -43,20 +42,27 @@ import {
 } from "@/components/ui/alert-dialog";
 
 interface DataTable2Props<T> {
+    id: keyof T,
     data: T[]
     columns: ColumnDef<T>[],
-    getRowId?: (originalRow: T, index: number, parent?: Row<T>) => string,
-    onDeleteRows?: (ids: string[]) => void,
-    onDeleteRow?: (id: string) => void,
+    onDelete?: (id: string) => void,
+    onCreate?: () => void,
+    onUpdate?: (data: RowData) => void,
 }
 
-export default function DataTable2<T>({data, columns, getRowId, onDeleteRows, onDeleteRow}: DataTable2Props<T>) {
+export default function DataTable2<T>({
+                                          id,
+                                          data,
+                                          columns,
+                                          onCreate,
+                                          onDelete,
+                                          onUpdate,
+                                      }: DataTable2Props<T>) {
     const [tableData, setTableData] = React.useState<T[]>(data)
     const [globalFilter, setGlobalFilter] = React.useState("");
     const [rowSelection, setRowSelection] = React.useState<RowSelectionState>({})
     const [openAlert, setOpenAlert] = React.useState(false)
     const [deletedId, setDeletedId] = React.useState("")
-
     React.useEffect(() => {
         setTableData(data)
     }, [data])
@@ -66,7 +72,7 @@ export default function DataTable2<T>({data, columns, getRowId, onDeleteRows, on
         pageSize: 10,
     })
 
-    function handleDeleteRow(id: string) {
+    const handleDeleteRow = (id: string) => {
         setOpenAlert(true)
         setDeletedId(id)
     }
@@ -117,7 +123,7 @@ export default function DataTable2<T>({data, columns, getRowId, onDeleteRows, on
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end" className="w-32">
-                            <DropdownMenuItem>
+                            <DropdownMenuItem onClick={()=> onUpdate && onUpdate(row.original)}>
                                 <Pen/>Sửa
                             </DropdownMenuItem>
                             <DropdownMenuSeparator/>
@@ -128,7 +134,7 @@ export default function DataTable2<T>({data, columns, getRowId, onDeleteRows, on
                 ),
             },
         ],
-        [columns]
+        [columns, onUpdate]
     )
 
     const table = useReactTable({
@@ -145,28 +151,12 @@ export default function DataTable2<T>({data, columns, getRowId, onDeleteRows, on
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
-        getRowId
+        getRowId: (row) => `${row[id]}`,
     })
-
-    const handleDeleteMultipleRow = () => {
-        const selectedRows = table.getSelectedRowModel().rows
-        const selectedIds = selectedRows.map((row) => row.id)
-
-        if (onDeleteRows) onDeleteRows(selectedIds)
-    }
 
     return (
         <div className={'space-y-6'}>
             <div className="flex items-center">
-                {table.getFilteredSelectedRowModel().rows.length > 0
-                    ? (
-                        <Button className={'text-destructive'} variant={'outline'} onClick={handleDeleteMultipleRow}>
-                            <Trash/>
-                            Delete
-                        </Button>
-                    ) :
-                    ('')
-                }
                 <div className="flex items-center space-x-2 ml-auto">
                     <Search className="h-4 w-4 text-gray-400"/>
                     <Input
@@ -175,6 +165,10 @@ export default function DataTable2<T>({data, columns, getRowId, onDeleteRows, on
                         value={globalFilter}
                         onChange={(e) => setGlobalFilter(e.target.value)}
                     />
+                    <Button onClick={onCreate}>
+                        <Plus/>
+                        Thêm mới
+                    </Button>
                 </div>
             </div>
             <div className={'overflow-hidden border rounded-lg'}>
@@ -300,7 +294,7 @@ export default function DataTable2<T>({data, columns, getRowId, onDeleteRows, on
             <AlertDialog open={openAlert} onOpenChange={setOpenAlert}>
                 <AlertDialogContent>
                     <AlertDialogHeader>
-                        <AlertDialogTitle>Bạn chắc chắn muốn xóa?</AlertDialogTitle>
+                        <AlertDialogTitle>Bạn chắc chắn muốn xóa ?</AlertDialogTitle>
                         <AlertDialogDescription>
                             Hành động này không thể hoàn tác. Dữ liệu sẽ bị xóa vĩnh viễn.
                         </AlertDialogDescription>
@@ -308,8 +302,8 @@ export default function DataTable2<T>({data, columns, getRowId, onDeleteRows, on
                     <AlertDialogFooter>
                         <AlertDialogCancel>Hủy</AlertDialogCancel>
                         <AlertDialogAction onClick={() => {
-                            if (onDeleteRow)
-                                onDeleteRow(deletedId)
+                            if (onDelete)
+                                onDelete(deletedId)
                             setOpenAlert(false)
                         }}>
                             Xác nhận
@@ -317,6 +311,7 @@ export default function DataTable2<T>({data, columns, getRowId, onDeleteRows, on
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>
+
         </div>
     )
 }

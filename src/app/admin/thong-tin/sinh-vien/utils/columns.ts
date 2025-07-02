@@ -1,25 +1,26 @@
-"use client"
-import {z} from "zod";
 import {ColumnDef} from "@tanstack/react-table";
-import {deleteSinhVien, useSinhVien} from "@/app/admin/thong-tin/sinh-vien/func";
-import DataTable2 from "@/components/data-table2";
-import {format} from 'date-fns'
+import {z} from "zod";
+import {format} from "date-fns";
 
 export const schema = z.object({
-    "id_sinh_vien": z.number(),
-    "ho": z.string(),
-    "ten": z.string(),
-    "email": z.string(),
-    "sdt": z.string(),
-    "dia_chi": z.string(),
-    "cmnd": z.string(),
-    "mssv": z.string(),
-    "ngay_sinh": z.string(),
-    "noi_sinh": z.string(),
-    "gioi_tinh": z.boolean(),
+    id_sinh_vien: z.number().optional().nullable(),
+    mssv: z.string().nonempty("Mã số sinh viên không được để trống"),
+    ho: z.string().nonempty("Họ không được để trống"),
+    ten: z.string().nonempty("Tên không được để trống"),
+    email: z.string().nonempty("Email không được trống").email("Email không hợp lệ"),
+    gioi_tinh: z.any().optional(),
+    ngay_sinh: z.any().optional(),
+    sdt: z
+        .string()
+        .regex(/^(03|05|07|08|09|01[2|6|8|9])[0-9]{8}$/, {
+            message: "Số điện thoại không đúng định dạng",
+        })
+        .or(z.literal(""))
+        .optional()
 })
 
-const columns: ColumnDef<z.infer<typeof schema>>[] = [
+
+export const columns: ColumnDef<z.infer<typeof schema>>[] = [
     {
         accessorKey: "mssv",
         header: "MSSV",
@@ -60,16 +61,3 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
         header: "Nơi sinh"
     },
 ]
-
-export default function TableSinhVien() {
-    const {data} = useSinhVien();
-    return (
-        <DataTable2
-            data={data?.payload.data || []}
-            columns={columns}
-            getRowId={(row) => row.id_sinh_vien.toString()}
-            onDeleteRow={(id) => {
-                deleteSinhVien(id)
-            }}
-        />)
-}

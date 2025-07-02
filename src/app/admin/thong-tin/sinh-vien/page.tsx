@@ -1,7 +1,7 @@
-import TableSinhVien from "@/app/admin/thong-tin/sinh-vien/table";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
 import {Users} from "lucide-react";
 import PageBreadcrumb from "@/components/page-breadcrumb";
+import TableSinhVien from "@/app/admin/thong-tin/sinh-vien/component/table";
 
 export default function SinhVienPage() {
     return (
