@@ -1,28 +1,27 @@
 "use client";
 import {useQuery} from "@tanstack/react-query";
 import {toast} from "sonner";
-import {deleteSinhVien, getSinhVien, patchSinhVien, postSinhVien,} from "@/app/admin/thong-tin/sinh-vien/utils/func";
+import {deleteHeDaoTao, getHeDaoTao, patchHeDaoTao, postHeDaoTao,} from "@/app/admin/thong-tin/he-dao-tao/utils/func";
 import DataTable2 from "@/components/data-table2";
-import {columns, schema} from "@/app/admin/thong-tin/sinh-vien/utils/columns";
+import {columns, schema} from "@/app/admin/thong-tin/he-dao-tao/utils/columns";
 import ModalDialog from "@/components/modal-dialog";
 import {useModalDialogForm} from "@/hooks/use-modal-form";
-import {fieldsAdd} from "@/app/admin/thong-tin/sinh-vien/utils/fieldsAdd";
-import {fieldsUpdate} from "@/app/admin/thong-tin/sinh-vien/utils/fieldsUpdate";
+import {fields} from "@/app/admin/thong-tin/he-dao-tao/utils/fields";
 
-export default function TableSinhVien() {
+export default function TableHeDaoTao() {
     const {data, refetch} = useQuery({
-        queryKey: ["sinh-vien"],
-        queryFn: getSinhVien,
+        queryKey: ["he-dao-tao"],
+        queryFn: getHeDaoTao,
     });
 
     const modalAdd = useModalDialogForm({
-        fields: fieldsAdd,
+        fields,
         schema,
-        title: "Thêm sinh viên",
+        title: "Thêm hệ đào tạo",
         onSubmit: async (values: any) => {
             try {
-                await postSinhVien(values);
-                toast.success('Thêm sinh viên thành công')
+                await postHeDaoTao(values);
+                toast.success('Thêm hệ đào tạo thành công')
                 modalAdd.close();
                 await refetch();
             } catch (err: any) {
@@ -32,13 +31,13 @@ export default function TableSinhVien() {
     })
 
     const modalUpdate = useModalDialogForm({
-        fields: fieldsUpdate,
+        fields,
         schema,
-        title: "Cập nhật sinh viên",
+        title: "Cập nhật hệ đào tạo",
         onSubmit: async (values: any) => {
             try {
-                await patchSinhVien(values);
-                toast.success('Cập nhật sinh viên thành công')
+                await patchHeDaoTao(values);
+                toast.success('Cập nhật hệ đào tạo thành công')
                 modalUpdate.close();
                 await refetch();
             } catch (err: any) {
@@ -49,7 +48,7 @@ export default function TableSinhVien() {
 
     const handleDelete = async (id: string) => {
         try {
-            await deleteSinhVien(id);
+            await deleteHeDaoTao(id);
             toast.success("Xóa thành công");
             await refetch();
         } catch (err: any) {
@@ -60,7 +59,7 @@ export default function TableSinhVien() {
     return (
         <>
             <DataTable2
-                id={'id_sinh_vien'}
+                id={'id_he_dao_tao'}
                 data={data?.payload.data || []}
                 columns={columns}
                 onCreate={() => modalAdd.open()}

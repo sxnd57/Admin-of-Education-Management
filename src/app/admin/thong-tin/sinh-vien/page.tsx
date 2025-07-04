@@ -1,12 +1,12 @@
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
 import {Users} from "lucide-react";
-import PageBreadcrumb from "@/components/page-breadcrumb";
 import TableSinhVien from "@/app/admin/thong-tin/sinh-vien/component/table";
+import AppBreadcrumb from "@/components/page-breadcrumb";
 
 export default function SinhVienPage() {
     return (
         <>
-            <PageBreadcrumb/>
+            <AppBreadcrumb/>
             <Card>
                 <CardHeader>
                     <CardTitle className={'text-lg'}>

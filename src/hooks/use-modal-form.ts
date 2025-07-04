@@ -20,36 +20,31 @@ export function useModalDialogForm({
                                        defaultValues = {},
                                    }: UseModalDialogFormProps) {
     const [openDialog, setOpenDialog] = useState(false);
-    const [dialogTitle, setDialogTitle] = useState(title);
 
     const form = useForm({
         resolver: zodResolver(schema),
         defaultValues,
     });
 
-    const openWithData = (data?: Record<string, any>, overrideTitle?: string) => {
-        if (data) {
-            form.reset(data);
-        } else {
-            form.reset(defaultValues);
-        }
-
-        if (overrideTitle) {
-            setDialogTitle(overrideTitle);
-        } else {
-            setDialogTitle(title);
-        }
-
+    const open = (data?: Record<string, any>) => {
+        form.reset(data || defaultValues);
         setOpenDialog(true);
     };
+
+    const close = () => {
+        form.reset(defaultValues);
+        setOpenDialog(false);
+    };
+
 
     return {
         openDialog,
         setOpenDialog,
         form,
         fields,
-        title: dialogTitle,
+        title,
         onSubmit,
-        openWithData,
+        open,
+        close,
     };
 }

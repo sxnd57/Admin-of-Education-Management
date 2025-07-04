@@ -10,6 +10,10 @@ export const schema = z.object({
     email: z.string().nonempty("Email không được trống").email("Email không hợp lệ"),
     gioi_tinh: z.any().optional(),
     ngay_sinh: z.any().optional(),
+    cmnd: z.any().optional(),
+    noi_sinh: z.any().optional(),
+    dia_chi: z.any().optional(),
+    ghi_chu: z.any().optional(),
     sdt: z
         .string()
         .regex(/^(03|05|07|08|09|01[2|6|8|9])[0-9]{8}$/, {
@@ -17,6 +21,7 @@ export const schema = z.object({
         })
         .or(z.literal(""))
         .optional()
+        .nullable(),
 })
 
 

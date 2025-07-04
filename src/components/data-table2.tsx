@@ -5,7 +5,7 @@ import {
     flexRender,
     getCoreRowModel,
     getFilteredRowModel,
-    getPaginationRowModel, RowData,
+    getPaginationRowModel,
     RowSelectionState,
     useReactTable
 } from "@tanstack/react-table"
@@ -47,7 +47,7 @@ interface DataTable2Props<T> {
     columns: ColumnDef<T>[],
     onDelete?: (id: string) => void,
     onCreate?: () => void,
-    onUpdate?: (data: RowData) => void,
+    onUpdate?: (data: T) => void,
 }
 
 export default function DataTable2<T>({
@@ -123,7 +123,7 @@ export default function DataTable2<T>({
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end" className="w-32">
-                            <DropdownMenuItem onClick={()=> onUpdate && onUpdate(row.original)}>
+                            <DropdownMenuItem onClick={() => onUpdate && onUpdate(row.original)}>
                                 <Pen/>Sửa
                             </DropdownMenuItem>
                             <DropdownMenuSeparator/>
@@ -315,3 +315,4 @@ export default function DataTable2<T>({
         </div>
     )
 }
+

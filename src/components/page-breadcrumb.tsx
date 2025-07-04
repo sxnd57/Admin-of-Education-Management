@@ -28,6 +28,7 @@ const formatPageName = (slug: string) => {
         'tai-khoan': 'Tài khoản',
         'dang-nhap': 'Đăng nhập',
         'dang-ky': 'Đăng ký',
+        'he-dao-tao': 'Hệ đào tạo'
     }
 
     return dictionary[slug] || name
