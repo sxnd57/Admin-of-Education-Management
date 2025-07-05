@@ -3,8 +3,6 @@ import {schema} from "@/app/admin/thong-tin/he-dao-tao/utils/columns";
 import {z} from "zod";
 import {PayloadInterface} from "@/utils/payload.interface";
 
-
-
 export const getHeDaoTao = async (): Promise<PayloadInterface> => {
     return await http.get('/he-dao-tao');
 };

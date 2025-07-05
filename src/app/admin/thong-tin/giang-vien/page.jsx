@@ -12,10 +12,10 @@ export default function HeDaoTaoPage() {
 					<CardTitle className={'text-lg'}>
 						<div className="flex items-center space-x-2">
 							<Users/>
-							<span>Quản lý thông tin hệ đào tạo</span>
+							<span>Quản lý thông tin giảng viên</span>
 						</div>
 					</CardTitle>
-					<CardDescription>Các thông tin hệ đào tạo được quản lý bởi hệ thống</CardDescription>
+					<CardDescription>Các thông tin giảng viên được quản lý bởi hệ thống</CardDescription>
 				</CardHeader>
 				<CardContent>
 					<TableHeDaoTao/>

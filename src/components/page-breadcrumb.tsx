@@ -28,7 +28,16 @@ const formatPageName = (slug: string) => {
         'tai-khoan': 'Tài khoản',
         'dang-nhap': 'Đăng nhập',
         'dang-ky': 'Đăng ký',
-        'he-dao-tao': 'Hệ đào tạo'
+        'he-dao-tao': 'Hệ đào tạo',
+        'nien-khoa': 'Niên khóa',
+        'hoc-vi': 'Học vị',
+        'phong-hoc': 'Phòng học',
+        'toa-nha': 'Tòa nhà',
+        'don-vi': 'Đơn vị',
+        'nganh': 'Ngành',
+        'hoc-phan': 'Học phần',
+        'chung-chi': 'Chứng chỉ',
+        'chuc-vu': 'Chức vụ'
     }
 
     return dictionary[slug] || name

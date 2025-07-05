@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function LoginPage() {
     return (
-        <div className="grid bg-[url(/vlute-bg.png)] bg-cover w-full min-h-svh lg:grid-cols-2">
+        <div className="grid bg-[url(/vlute-bg.png)] bg-cover bg-center w-full min-h-svh lg:grid-cols-2">
             <div className="flex flex-col gap-4 p-6 md:p-10">
                 <div className="flex items-center justify-center gap-2 md:justify-start">
                     <a href="#" className="flex items-center gap-2 font-medium">

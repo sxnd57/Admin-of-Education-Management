@@ -53,7 +53,7 @@ export function LoginForm({className, ...props}: React.ComponentProps<"form">) {
                                 <FormItem>
                                     <FormLabel>Email</FormLabel>
                                     <FormControl>
-                                        <Input className={''} placeholder="mssv@st.vlute.edu.vn" {...field} required/>
+                                        <Input className={'bg-white'} placeholder="mssv@st.vlute.edu.vn" {...field} required/>
                                     </FormControl>
                                     <FormMessage/>
                                 </FormItem>
@@ -66,7 +66,7 @@ export function LoginForm({className, ...props}: React.ComponentProps<"form">) {
                                 <FormItem>
                                     <FormLabel>Password</FormLabel>
                                     <FormControl>
-                                        <Input type={"password"} placeholder="******" {...field} required/>
+                                        <Input className={'bg-white'} type={"password"} placeholder="******" {...field} required/>
                                     </FormControl>
                                     <FormMessage/>
                                 </FormItem>
