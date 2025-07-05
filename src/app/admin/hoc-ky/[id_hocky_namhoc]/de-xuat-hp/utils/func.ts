@@ -16,6 +16,6 @@ export const postDeXuatHP = async (body: PayloadInterface) => {
 }
 
 export const patchDeXuatHP = async (body: z.infer<typeof schema>) => {
-    const id = body.id_chuc_vu;
+    const id = body.id_de_xuat_hp;
     return await http.path(`/de-xuat-hp/${id}`, body);
 }

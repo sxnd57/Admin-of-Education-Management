@@ -3,7 +3,6 @@ import {SiteHeader} from "@/components/site-header"
 import {SidebarInset, SidebarProvider,} from "@/components/ui/sidebar"
 import React from "react";
 import TableQueryProvider from "@/providers/table-query.provider";
-import AppBreadcrumb from "@/components/page-breadcrumb";
 
 export default async function AdminLayout({children}: { children: React.ReactNode }) {
     return (

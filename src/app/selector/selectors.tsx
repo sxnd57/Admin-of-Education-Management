@@ -190,3 +190,45 @@ export const HocViSelectect = ({control, fieldKey, error}: any) => {
         />
     );
 }
+
+export const NienKhoaSelectect = ({control, fieldKey, error}: any) => {
+    const [options, setOptions] = useState<{ id_nien_khoa: number, ten_nien_khoa: string }[]>([]);
+
+    useEffect(() => {
+        const fetchNienKhoa = async () => {
+            const res: { status: number, payload: any } = await http.get('/nien-khoa')
+            if (!res.payload.status)
+                toast.error('Lỗi khi lấy dữ liệu niên khóa !')
+            setOptions(res.payload.data)
+        }
+
+        fetchNienKhoa()
+    }, []);
+
+    return (
+        <Controller
+            name={fieldKey}
+            control={control}
+            render={({field}) => (
+                <>
+                    <Select value={field.value?.toString()} onValueChange={(val) => field.onChange(Number(val))}>
+                        <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Chọn niên khóa"/>
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectGroup>
+                                <SelectLabel>Đơn vị</SelectLabel>
+                                {options.map((item) => (
+                                    <SelectItem key={item.id_nien_khoa} value={item.id_nien_khoa.toString()}>
+                                        {item.ten_nien_khoa}
+                                    </SelectItem>
+                                ))}
+                            </SelectGroup>
+                        </SelectContent>
+                    </Select>
+                    {error && <span className="text-sm text-red-500">{error.message?.toString()}</span>}
+                </>
+            )}
+        />
+    );
+}

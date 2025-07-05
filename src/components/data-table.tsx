@@ -336,12 +336,12 @@ export function DataTable({data: initialData}: {
         getFacetedUniqueValues: getFacetedUniqueValues(),
     })
 
-    function handleDeleteMultipleRow() {
-        const selectedRows = table.getSelectedRowModel().rows
-        const selectedIds = selectedRows.map((row) => row.original.id)
-
-        console.log('Các ID đã chọn:', selectedIds)
-    }
+    // function handleDeleteMultipleRow() {
+    //     const selectedRows = table.getSelectedRowModel().rows
+    //     const selectedIds = selectedRows.map((row) => row.original.id)
+    //
+    //     console.log('Các ID đã chọn:', selectedIds)
+    // }
 
     function handleDragEnd(event: DragEndEvent) {
         const {active, over} = event
